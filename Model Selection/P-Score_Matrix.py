@@ -11,6 +11,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.preprocessing import StandardScaler
+from scipy.stats import ttest_rel
 
 # Dataset carregado
 file_path = './updated_pollution_dataset.csv'  
@@ -80,7 +81,6 @@ for i in range(num_models):
 # Criar DataFrame para visualização
 p_values_df = pd.DataFrame(p_values_matrix, index=model_names, columns=model_names)
 
-# Definir threshold de significância
 THRESHOLD = 0.05
 
 # Criar máscara para destacar valores abaixo do threshold
@@ -102,12 +102,6 @@ plt.ylabel("Modelo Avaliado", fontsize=11)
 #plt.show()
 
 ###############################################################################################
-
-import numpy as np
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-from scipy.stats import ttest_rel
 
 # Definir um threshold para significância estatística
 threshold = 0.05

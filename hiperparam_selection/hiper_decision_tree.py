@@ -8,33 +8,30 @@ from scipy.stats import randint
 from scipy.stats import randint, uniform
 
 
-# Carregar o dataset
+
 data_path = "./updated_pollution_dataset.csv"
 data = pd.read_csv(data_path)
-
-# Separar variáveis dependentes e independentes
 x = data.drop(columns=["Air Quality"])
 y = data["Air Quality"]
 x_train, x_test, y_train, y_test = train_test_split(x, y, stratify=y, random_state=1)
 
-# Criar o pipeline
 pipeline = Pipeline([
-    ('scaler', StandardScaler()),  # Padronização
-    ('feature_selection', SelectKBest(score_func=f_classif, k=5)),  # Seleção de features
-    ('model', DecisionTreeClassifier(class_weight="balanced", random_state=1))  # Modelo de Árvore de Decisão
+    ('scaler', StandardScaler()),  
+    ('feature_selection', SelectKBest(score_func=f_classif, k=5)),  
+    ('model', DecisionTreeClassifier(class_weight="balanced", random_state=1))
 ])
 
 # Definir os hiperparâmetros para busca
 param_dist = {
-    'feature_selection__k': randint(3, x.shape[1]),  # Número de features a selecionar
-    'model__criterion': ['gini', 'entropy', 'log_loss'],  # Critério de divisão
-    'model__max_depth': randint(3, 30),  # Profundidade máxima da árvore
-    'model__min_samples_split': randint(5, 50),  # Mínimo de amostras para dividir um nó
-    'model__min_samples_leaf': randint(2, 30),  # Mínimo de amostras em cada folha
-    'model__splitter': ['best', 'random'],  # Estratégia de divisão dos nós
-    'model__ccp_alpha': uniform(0.0001, 0.02),  # Poda automática
-    'model__max_features': ['auto', 'sqrt', 'log2', None],  # Número de features por divisão
-    'model__class_weight': [None, 'balanced']  # Ajuste para classes desbalanceadas
+    'feature_selection__k': randint(3, x.shape[1]),
+    'model__criterion': ['gini', 'entropy', 'log_loss'],
+    'model__max_depth': randint(3, 30),
+    'model__min_samples_split': randint(5, 50),
+    'model__min_samples_leaf': randint(2, 30),
+    'model__splitter': ['best', 'random'],
+    'model__ccp_alpha': uniform(0.0001, 0.02),
+    'model__max_features': ['auto', 'sqrt', 'log2', None],
+    'model__class_weight': [None, 'balanced']
 }
 
 # Executar RandomizedSearchCV
@@ -45,9 +42,7 @@ random_search = RandomizedSearchCV(
 
 random_search.fit(x_train, y_train)
 
-# Mostrar os melhores hiperparâmetros encontrados
-print("Melhores hiperparâmetros:", random_search.best_params_)
 
-# Avaliar o modelo otimizado no conjunto de teste
+print("Melhores hiperparâmetros:", random_search.best_params_)
 best_model = random_search.best_estimator_
 print(f"Taxa de acerto no teste: {best_model.score(x_test, y_test):.4f}")
