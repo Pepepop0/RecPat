@@ -1,0 +1,15 @@
+Neural:
+
+Melhores hiperparâmetros: {'feature_selection_k': 7, 'modelactivation': 'tanh', 'modelalpha': np.float64(0.004368108400282419), 'modelhidden_layer_sizes': (50,), 'modellearning_rate': 'constant', 'model_solver': 'adam'}
+
+
+Decision tree:
+Melhores hiperparâmetros: {'feature_selection__k': 8, 'model__ccp_alpha': np.float64(0.0032135042552847537), 'model__class_weight': None, 'model__criterion': 'log_loss', 'model__max_depth': 13, 'model__max_features': None, 'model__min_samples_leaf': 2, 'model__min_samples_split': 15, 'model__splitter': 'best'}
+
+SVM 
+
+Melhores hiperparâmetros: {'feature_selection__k': 7, 'model__C': np.float64(75.05443810523117), 'model__class_weight': None, 'model__degree': 3, 'model__gamma': np.float64(0.007293840717260929), 'model__kernel': 'rbf'}
+
+Naive
+
+Melhores hiperparâmetros: {'feature_selection__k': 7, 'model__var_smoothing': np.float64(0.00027387693197926166)}
